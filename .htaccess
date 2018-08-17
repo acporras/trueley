@@ -1,0 +1,14 @@
+RewriteEngine on
+
+#RewriteCond %{HTTPS} !=on
+#RewriteRule ^.*$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+#RewriteCond $1 !^(index\.php|public|\.txt)
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^(.*)$ index.php?$1
+
+RewriteCond $1 !^(index\.php|public|\.txt|assets/images/fav/favicon\.ico)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?$1

@@ -1,0 +1,1 @@
+<!--a href="#" class="btn btn-link btn-float text-size-small has-text" uk-toggle="target: #offcanvas-flip"><i class="icon-portfolio text-primary"></i> <span><?php echo $this->lang->line('nav_btn_aplicaciones'); ?></span></a-->

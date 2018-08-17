@@ -1,0 +1,79 @@
+{
+    "collection":{
+        "id":4005646389,
+        "site_id":"MLA",
+        "date_created":"2018-08-02T22:20:04.000-04:00",
+        "date_approved":"2018-08-06T12:55:11.299-04:00",
+        "money_release_date":"2018-08-20T12:55:11.299-04:00",
+        "last_modified":"2018-08-06T12:55:11.296-04:00",
+        "payer":{
+            "id":185352943,
+            "first_name":"matias",
+            "last_name":"estigarribia",
+            "phone":{
+                "area_code":" ",
+                "number":"376-4458790",
+                "extension":""
+            },
+            "identification":{
+                "type":"DNI",
+                "number":"36407654"
+            },
+            "email":"matias.estigarribia2112@gmail.com",
+            "nickname":"ESMA292958"
+        },
+        "order_id":"PL-5b6280664c210",
+        "external_reference":"PL-5b6280664c210",
+        "merchant_order_id":null,
+        "reason":"Test Real No Usar",
+        "currency_id":"ARS",
+        "transaction_amount":2,
+        "net_received_amount":1.89,
+        "total_paid_amount":2,
+        "shipping_cost":0,
+        "coupon_amount":0,
+        "coupon_fee":0,
+        "finance_fee":0,
+        "discount_fee":0,
+        "coupon_id":null,
+        "status":"approved",
+        "status_detail":"accredited",
+        "installments":1,
+        "issuer_id":294,
+        "installment_amount":2,
+        "deferred_period":null,
+        "payment_type":"credit_card",
+        "marketplace":"NONE",
+        "operation_type":"recurring_payment",
+        "transaction_order_id":"null",
+        "statement_descriptor":"null",
+        "cardholder":{
+            "name":"Matias estigarribia",
+            "identification":{
+                "number":"36407654",
+                "type":"DNI"
+            }
+        },
+        "authorization_code":"null",
+        "marketplace_fee":0,
+        "deduction_schema":null,
+        "refunds":[],
+        "amount_refunded":0,
+        "last_modified_by_admin":null,
+        "api_version":"1",
+        "concept_id":null,
+        "concept_amount":0,
+        "internal_metadata":[],
+        "collector":{
+            "id":160361203,"first_name":"guido",
+            "last_name":"halley",
+            "phone":{
+                "area_code":" ",
+                "number":"54 154609701",
+                "extension":""
+            },
+            "email":"guidohalley@hotmail.com",
+            "nickname":"GUIDOHALLEY"
+        }
+    }
+}
