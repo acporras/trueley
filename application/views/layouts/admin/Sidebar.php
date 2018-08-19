@@ -56,12 +56,103 @@
 
 					<?php if($this->_session->data->nivel == "User" || $this->_session->data->nivel == "Client"){ ?>
 						<li class="<?php echo ($clase=="desktop") ? 'active' : ''; ?>"><a href="<?php echo $url ?>home"><i class="icon-home4"></i> <span>Escritorio</span></a></li>
-					
+						<li class="<?php echo ($clase=="processes") ? 'active' : ''; ?>">
+							<a href="<?php echo $url ?>processes">
+								<i class="icon-server"></i>
+								<span>Procesos</span>
+							</a>
+						</li>
+						<li class="<?php echo ($clase=="parameters") ? 'active' : ''; ?>">
+							<a href="#">
+								<i class="icon-gear"></i>
+								<span>Parametros</span>
+							</a>
+							<ul class="navigation navigation-main navigation-accordion">
+								<li class="<?php echo ($clase=="attorneys") ? 'active' : ''; ?>">
+									<a href="<?php echo $url ?>parameters/attorneys">
+										<i class="icon-users4"></i>
+										<span>Abogados</span>
+									</a>
+								</li>
+								<li class="<?php echo ($clase=="members") ? 'active' : ''; ?>">
+									<a href="<?php echo $url ?>parameters/members">
+										<i class="icon-users2"></i>
+										<span>Miembros</span>
+									</a>
+								</li>
+								<li class="<?php echo ($clase=="notifiers") ? 'active' : ''; ?>">
+									<a href="<?php echo $url ?>parameters/notifiers">
+										<i class="icon-notification2"></i>
+										<span>Notificadores</span>
+									</a>
+								</li>
+								<li class="<?php echo ($clase=="types_process") ? 'active' : ''; ?>">
+									<a href="<?php echo $url ?>parameters/types_process">
+										<i class="icon-menu2"></i>
+										<span>Tipos de Procesos</span>
+									</a>
+								</li>
+								<li class="<?php echo ($clase=="types_states") ? 'active' : ''; ?>">
+									<a href="<?php echo $url ?>parameters/types_states">
+										<i class="icon-switch"></i>
+										<span>Tipos de estados</span>
+									</a>
+								</li>
+								<li class="<?php echo ($clase=="types_management") ? 'active' : ''; ?>">
+									<a href="<?php echo $url ?>parameters/types_management">
+										<i class="icon-shield-check"></i>
+										<span>Tipos de gestiones</span>
+									</a>
+								</li>
+								<li class="<?php echo ($clase=="intervention_characters") ? 'active' : ''; ?>">
+									<a href="<?php echo $url ?>parameters/intervention_characters">
+										<i class="icon-book3"></i>
+										<span>Caracteres de intervención</span>
+									</a>
+								</li>
+								<li class="<?php echo ($clase=="domiciles_constituted") ? 'active' : ''; ?>">
+									<a href="<?php echo $url ?>parameters/domiciles_constituted">
+										<i class="icon-home7"></i>
+										<span>Domicilios constituidos</span>
+									</a>
+								</li>
+								<li class="<?php echo ($clase=="judicial_offices") ? 'active' : ''; ?>">
+									<a href="<?php echo $url ?>parameters/judicial_offices">
+										<i class="icon-office"></i>
+										<span>Oficinas judiciales</span>
+									</a>
+								</li>
+								<li class="<?php echo ($clase=="cash_accounts") ? 'active' : ''; ?>">
+									<a href="<?php echo $url ?>parameters/cash_accounts">
+										<i class="icon-box"></i>
+										<span>Cuentas de caja</span>
+									</a>
+								</li>
+								<li class="<?php echo ($clase=="monetary_update") ? 'active' : ''; ?>">
+									<a href="<?php echo $url ?>parameters/monetary_update">	
+										<i class="icon-coin-pound"></i>
+										<span>Tablas de actualización Monetaria</span>
+									</a>
+								</li>
+								<li class="<?php echo ($clase=="holidays") ? 'active' : ''; ?>">
+									<a href="<?php echo $url ?>parameters/holidays">
+										<i class="icon-calendar"></i>
+										<span>Feriados</span>
+									</a>
+								</li>
+								<li class="<?php echo ($clase=="dictionary") ? 'active' : ''; ?>">
+									<a href="<?php echo $url ?>parameters/dictionary">
+										<i class="icon-book"></i>
+										<span>Diccionario</span>
+									</a>
+								</li>
+							</ul>
+						</li>
 						<li class="<?php echo ($clase=="expedientes") ? 'active' : ''; ?>"><a href="<?php echo $url ?>expedientes"><i class="icon-portfolio"></i> <span>Gestión de Expedientes</span></a></li>
 
 						<?php if($this->_session->data->nivel == "Client"){ ?>
-							<li class="<?php echo ($clase=="clientusers") ? 'active' : ''; ?>"><a href="<?php echo $url ?>clientusers"><i class="icon-gear"></i> <span>Gestión de Usuarios</span></a></li>
-							<li class="<?php echo ($clase=="lawyerconf") ? 'active' : ''; ?>"><a href="<?php echo $url ?>lawyerconf"><i class="icon-gear"></i> <span>Pagos</span></a></li>
+							<li class="<?php echo ($clase=="clientusers") ? 'active' : ''; ?>"><a href="<?php echo $url ?>clientusers"><i class="icon-users"></i> <span>Gestión de Usuarios</span></a></li>
+							<li class="<?php echo ($clase=="lawyerconf") ? 'active' : ''; ?>"><a href="<?php echo $url ?>lawyerconf"><i class="icon-coin-dollar"></i> <span>Pagos</span></a></li>
 						<?php } ?>
 				
 					<?php } ?>
