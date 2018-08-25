@@ -343,7 +343,6 @@ class Mexpedientes extends CI_model
         }
     }//
 
-
     public function _getFullData($x){
         $q = $this->db->query("SELECT * FROM expedientes WHERE idExpe = '$x'");
 

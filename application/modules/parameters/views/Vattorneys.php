@@ -22,8 +22,10 @@
         </ul>
     </div>
 </div>
+<link href="<?php echo $url; ?>assets/inicio/css/iziModal.min.css" rel="stylesheet">
 <script type="text/javascript" src="<?php echo $url ?>assets/js/plugins/media/fancybox.min.js"></script>
 <script type="text/javascript" src="<?php echo $url ?>assets/js/pages/extension_blockui.js"></script>
+<script type="text/javascript" src="<?php echo $url; ?>assets/inicio/js/iziModal.min.js"></script>
 <!-- /page header -->
 <!-- Content area -->
 <div class="content">
@@ -37,9 +39,9 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Lista de Procesos</h3>
+                    <h3 class="panel-title">Lista de Abogados</h3>
                     <div class="heading-elements">
-                        <a href="#" onClick="" class="uk-icon-button uk-margin-small-right newProcess" uk-icon="plus" uk-tooltip="title: Nuevo Proceso" ></a>
+                        <a href="#" onClick="" class="uk-icon-button uk-margin-small-right newAttorney" uk-icon="plus" uk-tooltip="title: Nuevo Abogado" ></a>
                     </div>
                 </div>
                 <div class="panel-body">
@@ -47,29 +49,347 @@
                         <table class="table table-hover datatable-basic">
                             <thead>
                                 <tr>
-                                    <th>Caratula</th>
-                                    <th>Tipo proceso</th>
-                                    <th>Observación</th>
-                                    <th>Numero de Carpeta</th>
-                                    <th>Grupo</th>
-                                    <th>Responsable</th>
-                                    <th>Nivel Acceso</th>
-                                    <th>Fec. Inicio</th>
-                                    <th>Fec. Finaliz</th>
+                                    <th>Descripción</th>
+                                    <th>Estado</th>
+                                    <th>Fecha Registro</th>
+                                    <th>Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php 
+                                    if($lista->cantidad>=1){
+                                        foreach ($lista ->datos as $item) {
+                                            $cl = ($item->estatus) ? 'bg-success' : 'bg-danger'; 
+                                            $tx = ($item->estatus == '1') ? 'Activo' : 'Inactivo'; 
+                                ?>
+                                    <tr>
+                                        <td><?php echo $item->descripcion ?></td>
+                                        <td><span class="label <?php echo $cl; ?>" ><?php echo $tx; ?></span></td>
+                                        <td><?php echo $item->fechareg ?></td>
+                                        <td>
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="icon-menu7"></i>
+                                            </button>
+                                            <div uk-dropdown="mode: click; pos:top-left">
+                                                <ul class="uk-nav uk-dropdown-nav">
+                                                    <li class="uk-active">
+                                                        <a href="#" data-id="<?php echo $item->idAbogado ?>" onclick="editAttorney(<?php echo $item->idAbogado ?>);">
+                                                            <i class="icon-database-edit2 text-primary"></i>
+                                                            Editar
+                                                        </a>
+                                                    </li>
+                                                    <li class="uk-active">
+                                                        <a href="#" data-id="<?php echo $item->idAbogado ?>" onclick="delAttorney(<?php echo $item->idAbogado ?>);">
+                                                            <i class="icon-database-remove text-danger"></i>
+                                                            Eliminar
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>            
+                                <?php        }
+                                    }
+                                ?>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="modal-new">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Nuevo Abogado</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="<?php echo $url ?>parameters/attorneys/newattorney" id="formnew">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <textarea class="form-control" rows="3" placeholder="Descripción" name="description" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <input placeholder="Auxiliar 1" class="form-control" type="text" name="auxiliar1">
+                                        <input placeholder="Auxiliar 2" class="form-control" type="text" name="auxiliar2">
+                                        <input placeholder="Auxiliar 3" class="form-control" type="text" name="auxiliar3">
+                                        <input placeholder="Auxiliar 4" class="form-control" type="text" name="auxiliar4">
+                                        <input placeholder="Auxiliar 5" class="form-control" type="text" name="auxiliar5">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button type="button" class="btn btn-primary btnregister">
+                            Registrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modal-edit">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Editar Abogado</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="<?php echo $url ?>parameters/attorneys/updateattorney" id="formedit">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <textarea id="taDescription" class="form-control" rows="3" placeholder="Descripción" name="description" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <input id="txtAuxiliar1" placeholder="Auxiliar 1" class="form-control" type="text" name="auxiliar1">
+                                        <input id="txtAuxiliar2" placeholder="Auxiliar 2" class="form-control" type="text" name="auxiliar2">
+                                        <input id="txtAuxiliar3" placeholder="Auxiliar 3" class="form-control" type="text" name="auxiliar3">
+                                        <input id="txtAuxiliar4" placeholder="Auxiliar 4" class="form-control" type="text" name="auxiliar4">
+                                        <input id="txtAuxiliar5" placeholder="Auxiliar 5" class="form-control" type="text" name="auxiliar5">
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="id" id="txtIdAttorney"/>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button type="button" class="btn btn-primary btnupdate">
+                            Actualizar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="modal-alert2"></div>
     <?php } ?>
 </div>
 
 <script type="text/javascript">
+    var msg = '<?php echo isset($_GET['msg']) ? $_GET['msg'] : '' ?>';
+
+    function editAttorney(dataid){
+        var id = dataid;
+
+        $.post('<?php echo $url ?>parameters/attorneys/getfulldata',{
+            id:id
+        })
+        .done(function(resp){
+            if(resp !="201"){
+                var d = eval("("+resp+")");
+                $("#taDescription").val(d.descripcion);
+                $("#txtAuxiliar1").val(d.auxiliar1);
+                $("#txtAuxiliar2").val(d.auxiliar2);
+                $("#txtAuxiliar3").val(d.auxiliar3);
+                $("#txtAuxiliar4").val(d.auxiliar4);
+                $("#txtAuxiliar5").val(d.auxiliar5);
+                $("#txtIdAttorney").val(d.idAbogado);
+                $("#modal-edit").modal('show');
+                
+
+            }else{
+                new PNotify({
+                    title: 'Atención',
+                    text: 'Ha ocurrido un error inesperado, por favor, refresque la pagina he inetente de nuevo',
+                    icon: 'icon-warning22',
+                    type: 'error'
+                });
+            }
+        })
+        .fail(function(err){
+                new PNotify({
+                    title: 'Atención',
+                    text: 'Ha ocurrido un error inesperado, por favor, refresque la pagina he inetente de nuevo',
+                    icon: 'icon-warning22',
+                    type: 'error'
+                });
+        })
+    }
+
+    function delAttorney(dataid){
+        var id = dataid;
+        UIkit.modal.confirm('¿Esta seguro de eliminar el Abogado?').then(function () {
+            UIkit.modal.prompt('Ingrese su clave de acceso para confirmar la eliminación', '').then(function (clave) {
+
+                if(clave==""){
+                    new PNotify({
+                        title: 'Atención',
+                        text: 'Debe ingresar la clave de acceso',
+                        icon: 'icon-warning22'
+                    });
+                    return false;
+                }
+
+                $("body").block({
+                    message: '<span class="text-semibold"><i class="icon-spinner4 spinner position-left"></i>&nbsp; Eliminando Registro...</span>',
+                    timeout: 600000, //unblock after 2 seconds
+                    overlayCSS: {
+                        backgroundColor: '#000',
+                        opacity: 0.8,
+                        cursor: 'wait'
+                    },
+                    css: {
+                        border: 0,
+                        padding: '10px 15px',
+                        color: '#fff',
+                        width: 'auto',
+                        '-webkit-border-radius': 2,
+                        '-moz-border-radius': 2,
+                        backgroundColor: '#9E0000'
+                    }
+                });
+                $.post('<?php echo $url ?>parameters/attorneys/delattorney',{
+                    id:id,
+                    clave:clave
+                })
+                .done(function(resp){
+                    console.log(resp);
+                    $("body").unblock();
+                    if($.trim(resp)=="200"){
+                        UIkit.modal.alert('Se ha eliminado el abogado correctamente, se procederá a refrescar las listas').then(function () {
+                            window.location.href="<?php echo $url ?>parameters/attorneys";
+                        });
+
+                    }else{
+                        new PNotify({
+                            title: 'Atención',
+                            text: 'Ha ocurrido un error inesperado o la data esta errada',
+                            icon: 'icon-warning22'
+                        });
+                    }
+
+                })
+                .fail(function(err){
+                    $("body").unblock();
+
+                })
+
+            });
+        }, function () {
+            new PNotify({
+                title: 'Info',
+                text: 'Ha cancelado la eliminación',
+                icon: 'icon-warning22'
+            });
+        });
+    }
+
     $(function(){
-        
+        switch (msg) {
+            case 'emptyDescription':
+                var msga = $("#modal-alert2").iziModal({
+                    title: "Alerta",
+                    subtitle: 'Se debe incluir una descripción',
+                    headerColor: '#f4d276',
+                    width: 600,
+                    timeout: 7000,
+                    setZindex:2000000,
+                    timeoutProgressbar: true,
+                    transitionIn: 'fadeInDown',
+                    transitionOut: 'fadeOutDown',
+                    pauseOnHover: true
+                });
+                msga.iziModal('open');
+            break;
+
+            case 'SuccessInsert':
+                var msga = $("#modal-alert2").iziModal({
+                    title: "Exito!",
+                    subtitle: 'Se ha registrado el Abogado',
+                    headerColor: '#4f7c34',
+                    width: 600,
+                    timeout: 7000,
+                    setZindex:2000000,
+                    timeoutProgressbar: true,
+                    transitionIn: 'fadeInDown',
+                    transitionOut: 'fadeOutDown',
+                    pauseOnHover: true
+                });
+                msga.iziModal('open');
+            break;
+
+            case 'FailedInsert':
+                var msga = $("#modal-alert2").iziModal({
+                    title: "Error!",
+                    subtitle: 'No se pudo insertar el Abogado',
+                    headerColor: '#BD5B5B',
+                    width: 600,
+                    timeout: 7000,
+                    setZindex:2000000,
+                    timeoutProgressbar: true,
+                    transitionIn: 'fadeInDown',
+                    transitionOut: 'fadeOutDown',
+                    pauseOnHover: true
+                });
+                msga.iziModal('open');
+            break;
+
+            case 'SuccessUpdate':
+                var msga = $("#modal-alert2").iziModal({
+                    title: "Exito!",
+                    subtitle: 'Se ha actualizado correctamente el Abogado',
+                    headerColor: '#4f7c34',
+                    width: 600,
+                    timeout: 7000,
+                    setZindex:2000000,
+                    timeoutProgressbar: true,
+                    transitionIn: 'fadeInDown',
+                    transitionOut: 'fadeOutDown',
+                    pauseOnHover: true
+                });
+                msga.iziModal('open');
+            break;
+
+            case 'FailedUpdate':
+                var msga = $("#modal-alert2").iziModal({
+                    title: "Error!",
+                    subtitle: 'No se pudo actualizar el Abogado',
+                    headerColor: '#BD5B5B',
+                    width: 600,
+                    timeout: 7000,
+                    setZindex:2000000,
+                    timeoutProgressbar: true,
+                    transitionIn: 'fadeInDown',
+                    transitionOut: 'fadeOutDown',
+                    pauseOnHover: true
+                });
+                msga.iziModal('open');
+            break;
+        }
+
+        $(".newAttorney").click(function(e){
+            e.preventDefault();
+            $("#modal-new").modal('show');
+        });
+
+        $(".btnregister").click(function(e){
+            e.preventDefault();
+            if (!$("#formnew")[0].checkValidity()) {
+                $("#formnew").find("#submit-hidden").click();
+            }else{
+                $("#formnew").submit();
+            }
+        });
+
+        $(".btnupdate").click(function(){
+            if (!$("#formedit")[0].checkValidity()) {
+                $("#formedit").find("#submit-hidden").click();
+            }else{
+                $("#formedit").submit();
+            }
+        });
     });
 </script>

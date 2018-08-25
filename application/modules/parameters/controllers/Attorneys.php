@@ -25,6 +25,7 @@ class Attorneys extends MX_Controller {
 			"titulo"      => $this->_conf['appname']." - ".$this->lang->line('navmodulo'),
 			"clase"       => "attorneys",
 			"conf"        => $this->_conf,
+			"lista"  	  => $this->mattorneys->_getAttorneys(),
 			"novedades"  => $this->mattorneys->_getNovedades(),
 		];
 
@@ -34,5 +35,77 @@ class Attorneys extends MX_Controller {
 		$this->load->view('Vattorneys',$data);
 		$this->load->view('layouts/admin/Footer',$data);
 	}//
+
+	public function getFullData(){
+		$resp = $this->mattorneys->_getFullData(
+			$this->security->xss_clean($_POST['id'])
+		);
+		if($resp){
+			echo $resp;
+			exit;
+		}else{
+			echo "201";
+			exit;
+		}
+	}
+
+	public function newAttorney(){
+		$data = array(
+			"description"    => $this->security->xss_clean($this->input->post('description')),
+			"auxiliar1"    => $this->security->xss_clean($this->input->post('auxiliar1')),
+			"auxiliar2"    => $this->security->xss_clean($this->input->post('auxiliar2')),
+			"auxiliar3"    => $this->security->xss_clean($this->input->post('auxiliar3')),
+			"auxiliar4"    => $this->security->xss_clean($this->input->post('auxiliar4')),
+			"auxiliar5"    => $this->security->xss_clean($this->input->post('auxiliar5'))
+		);
+
+		if($data['description']==""){
+			header('location:'.base_url().'parameters/attorneys?msg=emptyDescription');
+			exit;
+		}
+
+		$resp = $this->mattorneys->_newAttorney($data);
+
+		if($resp){
+			header('location:'.base_url().'parameters/attorneys?msg=SuccessInsert');
+		}else{
+			header('location:'.base_url().'parameters/attorneys?msg=FailedInsert');
+		}
+	}
+
+	public function updateAttorney(){
+		$data = array(
+			'id'        => $this->security->xss_clean($_POST['id']),
+			'description'    => $this->security->xss_clean($_POST['description']),
+			'auxiliar1'    => $this->security->xss_clean($_POST['auxiliar1']),
+			'auxiliar2'    => $this->security->xss_clean($_POST['auxiliar2']),
+			'auxiliar3'    => $this->security->xss_clean($_POST['auxiliar3']),
+			'auxiliar4'    => $this->security->xss_clean($_POST['auxiliar4']),
+			'auxiliar5'    => $this->security->xss_clean($_POST['auxiliar5'])
+		);
+		$resp = $this->mattorneys->_updateAttorney($data);
+		if($resp){
+			header('location:'.base_url().'parameters/attorneys?msg=SuccessUpdate');
+			exit;
+		}else{
+			header('location:'.base_url().'parameters/attorneys?msg=FailedUpdate');
+			exit;
+		}
+	}
+
+	public function delAttorney(){
+		$data = array(
+			$this->security->xss_clean($_POST['id']),
+			$this->security->xss_clean($_POST['clave']),
+		);
+		$resp = $this->mattorneys->_delAttorney($data);
+		if($resp){
+			echo "200";
+			exit;
+		}else{
+			echo "201";
+			exit;
+		}
+	}
 
 }

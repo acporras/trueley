@@ -34,24 +34,66 @@ class Types_process extends MX_Controller {
 		$this->load->view('layouts/admin/Sidebar',$data);
 		$this->load->view('Vtypes_process',$data);
 		$this->load->view('layouts/admin/Footer',$data);
-	}//
-
-	public function newTypesProcess(){
+	}
+	public function newTypeProcess(){
 		$data = array(
 			"description"    => $this->security->xss_clean($this->input->post('description'))
 		);
 
 		if($data['description']==""){
-			header('location:'.base_url().'parameters/types_process?msg=emptyName');
+			header('location:'.base_url().'parameters/types_process?msg=emptyDescription');
 			exit;
 		}
 
-		$resp = $this->mtypes_process->_newTypesProcess($data);
+		$resp = $this->mtypes_process->_newTypeProcess($data);
 
 		if($resp){
-			header('location:'.base_url().'parameters/types_process?msg=success');
+			header('location:'.base_url().'parameters/types_process?msg=SuccessInsert');
 		}else{
-			header('location:'.base_url().'parameters/types_process?msg=failed');
+			header('location:'.base_url().'parameters/types_process?msg=FailedInsert');
+		}
+	}
+
+	public function updateTypeProcess(){
+		$data = array(
+			'id'        => $this->security->xss_clean($_POST['id']),
+			'description'    => $this->security->xss_clean($_POST['description'])
+		);
+		$resp = $this->mtypes_process->_updateTypeProcess($data);
+		if($resp){
+			header('location:'.base_url().'parameters/types_process?msg=SuccessUpdate');
+			exit;
+		}else{
+			header('location:'.base_url().'parameters/types_process?msg=FailedUpdate');
+			exit;
+		}
+	}
+
+	public function deltypeprocess(){
+		$data = array(
+			$this->security->xss_clean($_POST['id']),
+			$this->security->xss_clean($_POST['clave']),
+		);
+		$resp = $this->mtypes_process->_deltypeprocess($data);
+		if($resp){
+			echo "200";
+			exit;
+		}else{
+			echo "201";
+			exit;
+		}
+	}
+
+	public function getFullData(){
+		$resp = $this->mtypes_process->_getFullData(
+			$this->security->xss_clean($_POST['id'])
+		);
+		if($resp){
+			echo $resp;
+			exit;
+		}else{
+			echo "201";
+			exit;
 		}
 	}
 

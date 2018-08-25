@@ -62,6 +62,30 @@
 								<span>Procesos</span>
 							</a>
 						</li>
+						<li class="<?php echo ($clase=="people") ? 'active' : ''; ?>">
+							<a href="<?php echo $url ?>people">
+								<i class="icon-person"></i>
+								<span>Personas</span>
+							</a>
+						</li>
+						<li class="<?php echo ($clase=="diary") ? 'active' : ''; ?>">
+							<a href="<?php echo $url ?>diary">
+								<i class="icon-calendar52"></i>
+								<span>Agenda</span>
+							</a>
+						</li>
+						<li class="<?php echo ($clase=="management") ? 'active' : ''; ?>">
+							<a href="<?php echo $url ?>management">
+								<i class="icon-briefcase3"></i>
+								<span>Gestiones</span>
+							</a>
+						</li>
+						<li class="<?php echo ($clase=="cash") ? 'active' : ''; ?>">
+							<a href="<?php echo $url ?>cash">
+								<i class="icon-piggy-bank"></i>
+								<span>Caja</span>
+							</a>
+						</li>
 						<li class="<?php echo ($clase=="parameters") ? 'active' : ''; ?>">
 							<a href="#">
 								<i class="icon-gear"></i>

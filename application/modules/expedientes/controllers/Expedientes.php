@@ -176,7 +176,6 @@ class Expedientes extends MX_Controller {
 			exit;
 		}
 	}//
-
 	public function getFullData(){
 		$resp = $this->mexpedientes->_getFullData(
 			$this->security->xss_clean($_POST['id'])

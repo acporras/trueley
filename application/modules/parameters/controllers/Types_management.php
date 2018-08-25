@@ -25,6 +25,8 @@ class Types_management extends MX_Controller {
 			"titulo"      => $this->_conf['appname']." - ".$this->lang->line('navmodulo'),
 			"clase"       => "types_management",
 			"conf"        => $this->_conf,
+			"lista"       => $this->mtypes_management->_getTypesManagement(),
+			"mae_fechacontrol" => $this->mtypes_management->_getFechaControl(),
 			"novedades"  => $this->mtypes_management->_getNovedades(),
 		];
 
@@ -34,5 +36,76 @@ class Types_management extends MX_Controller {
 		$this->load->view('Vtypes_management',$data);
 		$this->load->view('layouts/admin/Footer',$data);
 	}//
+
+	public function getFullData(){
+		$resp = $this->mtypes_management->_getFullData(
+			$this->security->xss_clean($_POST['id'])
+		);
+		if($resp){
+			echo $resp;
+			exit;
+		}else{
+			echo "201";
+			exit;
+		}
+	}
+
+	public function newTypeManagement(){
+		$data = array(
+			"description"    => $this->security->xss_clean($this->input->post('description')),
+			"cant_calculo"    => $this->security->xss_clean($this->input->post('cant_calculo')),
+			"type_calculo"    => $this->security->xss_clean($this->input->post('type_calculo'))
+		);
+
+		if($data['description']==""){
+			header('location:'.base_url().'parameters/types_management?msg=emptyDescription');
+			exit;
+		}
+
+		if($data['cant_calculo']==""){
+			header('location:'.base_url().'parameters/types_management?msg=emptyCantCalculo');
+			exit;
+		}
+
+		$resp = $this->mtypes_management->_newTypeManagement($data);
+
+		if($resp){
+			header('location:'.base_url().'parameters/types_management?msg=SuccessInsert');
+		}else{
+			header('location:'.base_url().'parameters/types_management?msg=FailedInsert');
+		}
+	}
+
+	public function updateTypeManagement(){
+		$data = array(
+			'id'        => $this->security->xss_clean($_POST['id']),
+			'description'    => $this->security->xss_clean($_POST['description']),
+			'cant_calculo'    => $this->security->xss_clean($_POST['cant_calculo']),
+			'type_calculo'    => $this->security->xss_clean($_POST['type_calculo'])
+		);
+		$resp = $this->mtypes_management->_updateTypeManagement($data);
+		if($resp){
+			header('location:'.base_url().'parameters/types_management?msg=SuccessUpdate');
+			exit;
+		}else{
+			header('location:'.base_url().'parameters/types_management?msg=FailedUpdate');
+			exit;
+		}
+	}
+
+	public function delTypeManagement(){
+		$data = array(
+			$this->security->xss_clean($_POST['id']),
+			$this->security->xss_clean($_POST['clave']),
+		);
+		$resp = $this->mtypes_management->_delTypeManagement($data);
+		if($resp){
+			echo "200";
+			exit;
+		}else{
+			echo "201";
+			exit;
+		}
+	}
 
 }

@@ -25,7 +25,8 @@ class Members extends MX_Controller {
 			"titulo"      => $this->_conf['appname']." - ".$this->lang->line('navmodulo'),
 			"clase"       => "members",
 			"conf"        => $this->_conf,
-			"novedades"  => $this->mmembers->_getNovedades(),
+			"lista"		  => $this->mmembers->_getMembers(),
+			"novedades"   => $this->mmembers->_getNovedades(),
 		];
 
 		$this->load->view('layouts/admin/Header',$data);
@@ -34,5 +35,71 @@ class Members extends MX_Controller {
 		$this->load->view('Vmembers',$data);
 		$this->load->view('layouts/admin/Footer',$data);
 	}//
+
+	public function getFullData(){
+        $resp = $this->mmembers->_getFullData(
+            $this->security->xss_clean($_POST['id'])
+        );
+        if($resp){
+            echo $resp;
+            exit;
+        }else{
+            echo "201";
+            exit;
+        }
+    }
+
+    public function newMember(){
+        $data = array(
+            "name"    => $this->security->xss_clean($this->input->post('name')),
+            "phone"    => $this->security->xss_clean($this->input->post('phone')),
+            "email"    => $this->security->xss_clean($this->input->post('email'))
+        );
+
+        if($data['name']==""){
+            header('location:'.base_url().'parameters/members?msg=emptyName');
+            exit;
+        }
+
+        $resp = $this->mmembers->_newMember($data);
+
+        if($resp){
+            header('location:'.base_url().'parameters/members?msg=SuccessInsert');
+        }else{
+            header('location:'.base_url().'parameters/members?msg=FailedInsert');
+        }
+    }
+
+    public function updateMember(){
+        $data = array(
+            'id'        => $this->security->xss_clean($_POST['id']),
+            'name'    => $this->security->xss_clean($_POST['name']),
+            'phone'    => $this->security->xss_clean($_POST['phone']),
+            'email'    => $this->security->xss_clean($_POST['email'])
+        );
+        $resp = $this->mmembers->_updateMember($data);
+        if($resp){
+            header('location:'.base_url().'parameters/members?msg=SuccessUpdate');
+            exit;
+        }else{
+            header('location:'.base_url().'parameters/members?msg=FailedUpdate');
+            exit;
+        }
+    }
+
+    public function delMember(){
+        $data = array(
+            $this->security->xss_clean($_POST['id']),
+            $this->security->xss_clean($_POST['clave']),
+        );
+        $resp = $this->mmembers->_delMember($data);
+        if($resp){
+            echo "200";
+            exit;
+        }else{
+            echo "201";
+            exit;
+        }
+    }
 
 }

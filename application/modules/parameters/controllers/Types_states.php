@@ -25,6 +25,8 @@ class Types_states extends MX_Controller {
 			"titulo"      => $this->_conf['appname']." - ".$this->lang->line('navmodulo'),
 			"clase"       => "types_states",
 			"conf"        => $this->_conf,
+			"lista"  	  => $this->mtypes_states->_getTypesStates(),
+			"mae_movimientos" => $this->mtypes_states->_getMovimientos(),
 			"novedades"  => $this->mtypes_states->_getNovedades(),
 		];
 
@@ -34,5 +36,69 @@ class Types_states extends MX_Controller {
 		$this->load->view('Vtypes_states',$data);
 		$this->load->view('layouts/admin/Footer',$data);
 	}//
+
+	public function getFullData(){
+		$resp = $this->mtypes_states->_getFullData(
+			$this->security->xss_clean($_POST['id'])
+		);
+		if($resp){
+			echo $resp;
+			exit;
+		}else{
+			echo "201";
+			exit;
+		}
+	}
+
+	public function newTypeState(){
+		$data = array(
+			"description"    => $this->security->xss_clean($this->input->post('description')),
+			"movement"    => $this->security->xss_clean($this->input->post('movement'))
+		);
+
+		if($data['description']==""){
+			header('location:'.base_url().'parameters/types_states?msg=emptyDescription');
+			exit;
+		}
+
+		$resp = $this->mtypes_states->_newTypeState($data);
+
+		if($resp){
+			header('location:'.base_url().'parameters/types_states?msg=SuccessInsert');
+		}else{
+			header('location:'.base_url().'parameters/types_states?msg=FailedInsert');
+		}
+	}
+
+	public function updateTypeState(){
+		$data = array(
+			'id'        => $this->security->xss_clean($_POST['id']),
+			'description'    => $this->security->xss_clean($_POST['description']),
+			'movement'    => $this->security->xss_clean($_POST['movement'])
+		);
+		$resp = $this->mtypes_states->_updateTypeState($data);
+		if($resp){
+			header('location:'.base_url().'parameters/types_states?msg=SuccessUpdate');
+			exit;
+		}else{
+			header('location:'.base_url().'parameters/types_states?msg=FailedUpdate');
+			exit;
+		}
+	}
+
+	public function delTypeState(){
+		$data = array(
+			$this->security->xss_clean($_POST['id']),
+			$this->security->xss_clean($_POST['clave']),
+		);
+		$resp = $this->mtypes_states->_delTypeState($data);
+		if($resp){
+			echo "200";
+			exit;
+		}else{
+			echo "201";
+			exit;
+		}
+	}
 
 }

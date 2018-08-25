@@ -26,6 +26,36 @@ class Mtypes_process extends CI_model
         return  ($q->num_rows()>=1) ? $q->result() : false;
     }//
 
+    public function _getUsuarios($x=null){
+
+        $c = $this->_session->data->codcliente;
+
+        if($x==null){
+            $a = $this->db->query("SELECT * FROM usuarios WHERE codcliente = '$c'");
+            if($a->num_rows()>=1){
+                $r = (object) array(
+                    'cantidad' => $a->num_rows(),
+                    'datos'    => $a->result()
+                );
+                return $r;
+            }else{
+                return false;
+            }
+        }else{
+            $a = $this->db->query("SELECT * FROM usuarios WHERE idUsuario = '$x' AND codcliente = '$c'");
+            if($a->num_rows()>=1){
+                $r = (object) array(
+                    'cantidad' => $a->num_rows(),
+                    'datos'    => $a->row()
+                );
+                return $r;
+            }else{
+                return false;
+            }
+        }
+
+    }//
+
     public function _getTypesProcess(){
         $cod =$this->_session->data->codcliente;
         $q = $this->db->query("SELECT * FROM tipo_proceso WHERE codcliente = '$cod' ORDER BY
@@ -38,7 +68,7 @@ class Mtypes_process extends CI_model
         return $r;
     }
 
-    public function _newTypesProcess($x){
+    public function _newTypeProcess($x){
         $data = array(
             "descripcion"     => $x['description'],
             "codcliente" => $this->_session->data->codcliente,
@@ -58,4 +88,57 @@ class Mtypes_process extends CI_model
             return false;
         }
     }
+
+    public function _updateTypeProcess($x){
+        $this->db->trans_begin();
+        $this->db->set('descripcion',$x['description']);
+        $this->db->set('fechamod',$this->_general->date()->datetime);
+        $this->db->where('idTipoproceso =',$x['id']);
+        $this->db->where('codcliente =',$this->_session->data->codcliente);
+        $this->db->update('tipo_proceso');
+
+        if($this->db->trans_complete()===TRUE){
+            $this->db->trans_commit();
+            
+            return true;
+
+        }else{
+            $this->db->trans_rollback();
+            return false;
+        }
+    }
+
+    public function _deltypeprocess($x){
+        $u = $this->_session->data->usuario;
+        $a = $this->db->query("SELECT * FROM usuarios WHERE usuario =  '$u'");
+
+        if(password_verify($x[1], $a->row()->pass)){
+            $data = $this->_getUsuarios($x[1]);
+
+            $this->db->trans_begin();
+            $this->db->where('idTipoproceso = ',$x[0]);
+            $this->db->delete('tipo_proceso');
+
+            if($this->db->trans_complete()===TRUE){
+                $this->db->trans_commit();
+                return true;
+            }else{
+                $this->db->trans_rollback();
+                return false;
+            }
+
+        }else{
+            return false;
+        }
+    }
+
+    public function _getFullData($x){
+        $q = $this->db->query("SELECT * FROM tipo_proceso WHERE idTipoProceso = '$x'");
+
+        if($q->num_rows()==1){
+            return json_encode($q->row());
+        }else{
+        }
+
+    }//
 }

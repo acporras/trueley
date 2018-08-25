@@ -247,6 +247,7 @@ class GeneralClass
 	//Retorna Informacion completa de una IP
 	public function city($X=null){
 		$ip = ($X==null) ? $this->IPreal() : $X;
+		//$reader = new Reader($_SERVER['DOCUMENT_ROOT'].'/trueley/application/libraries/GeoLite2-City.mmdb');
 		$reader = new Reader($_SERVER['DOCUMENT_ROOT'].'/application/libraries/GeoLite2-City.mmdb');
 		
 		try{
@@ -272,6 +273,7 @@ class GeneralClass
 	//Retorna Informacion del Pais
     public function country($X=null){
 		$ip = ($X==null) ? $this->IPreal() : $X;
+		//$reader = new Reader($_SERVER['DOCUMENT_ROOT'].'/trueley/application/libraries/GeoLite2-Country.mmdb');
 		$reader = new Reader($_SERVER['DOCUMENT_ROOT'].'/application/libraries/GeoLite2-Country.mmdb');
 		
 		try{
@@ -483,6 +485,7 @@ class GeneralClass
 		$valid = ['0','10','172','192','169','127'];
 
 		return (!in_array($e[0],$valid)) ? $ip : '186.185.186.227';
+		//return '190.43.103.194';
 	}
 
 

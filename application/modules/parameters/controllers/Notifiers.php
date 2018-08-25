@@ -25,6 +25,7 @@ class Notifiers extends MX_Controller {
 			"titulo"      => $this->_conf['appname']." - ".$this->lang->line('navmodulo'),
 			"clase"       => "notifiers",
 			"conf"        => $this->_conf,
+			"lista"  	  => $this->mnotifiers->_getNotifiers(),
 			"novedades"  => $this->mnotifiers->_getNovedades(),
 		];
 
@@ -34,5 +35,88 @@ class Notifiers extends MX_Controller {
 		$this->load->view('Vnotifiers',$data);
 		$this->load->view('layouts/admin/Footer',$data);
 	}//
+
+	public function getFullData(){
+		$resp = $this->mnotifiers->_getFullData(
+			$this->security->xss_clean($_POST['id'])
+		);
+		if($resp){
+			echo $resp;
+			exit;
+		}else{
+			echo "201";
+			exit;
+		}
+	}
+
+	public function newNotifier(){
+		$data = array(
+			"description"    => $this->security->xss_clean($this->input->post('description')),
+			"address"    => $this->security->xss_clean($this->input->post('address')),
+			"city"    => $this->security->xss_clean($this->input->post('city')),
+			"postalcode"    => $this->security->xss_clean($this->input->post('postalcode')),
+			"phone"    => $this->security->xss_clean($this->input->post('phone')),
+			"fax"    => $this->security->xss_clean($this->input->post('fax')),
+			"email"    => $this->security->xss_clean($this->input->post('email')),
+			"auxiliar1"    => $this->security->xss_clean($this->input->post('auxiliar1')),
+			"auxiliar2"    => $this->security->xss_clean($this->input->post('auxiliar2')),
+		);
+
+		if($data['description']==""){
+			header('location:'.base_url().'parameters/notifiers?msg=emptyDescription');
+			exit;
+		}
+
+		if($data['phone']==""){
+			header('location:'.base_url().'parameters/notifiers?msg=emptyPhone');
+			exit;
+		}
+
+		$resp = $this->mnotifiers->_newNotifier($data);
+
+		if($resp){
+			header('location:'.base_url().'parameters/notifiers?msg=SuccessInsert');
+		}else{
+			header('location:'.base_url().'parameters/notifiers?msg=FailedInsert');
+		}
+	}
+
+	public function updateNotifier(){
+		$data = array(
+			'id'        => $this->security->xss_clean($_POST['id']),
+			'description'    => $this->security->xss_clean($_POST['description']),
+			'address'    => $this->security->xss_clean($_POST['address']),
+			'city'    => $this->security->xss_clean($_POST['city']),
+			'postalcode'    => $this->security->xss_clean($_POST['postalcode']),
+			'phone'    => $this->security->xss_clean($_POST['phone']),
+			'fax'    => $this->security->xss_clean($_POST['fax']),
+			'email'    => $this->security->xss_clean($_POST['email']),
+			'auxiliar1'    => $this->security->xss_clean($_POST['auxiliar1']),
+			'auxiliar2'    => $this->security->xss_clean($_POST['auxiliar2'])
+		);
+		$resp = $this->mnotifiers->_updateNotifier($data);
+		if($resp){
+			header('location:'.base_url().'parameters/notifiers?msg=SuccessUpdate');
+			exit;
+		}else{
+			header('location:'.base_url().'parameters/notifiers?msg=FailedUpdate');
+			exit;
+		}
+	}
+
+	public function delNotifier(){
+		$data = array(
+			$this->security->xss_clean($_POST['id']),
+			$this->security->xss_clean($_POST['clave']),
+		);
+		$resp = $this->mnotifiers->_delNotifier($data);
+		if($resp){
+			echo "200";
+			exit;
+		}else{
+			echo "201";
+			exit;
+		}
+	}
 
 }

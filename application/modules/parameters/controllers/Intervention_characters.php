@@ -25,6 +25,7 @@ class Intervention_characters extends MX_Controller {
 			"titulo"      => $this->_conf['appname']." - ".$this->lang->line('navmodulo'),
 			"clase"       => "intervention_characters",
 			"conf"        => $this->_conf,
+			"lista"  	  => $this->mintervention_characters->_getInterventionCharacters(),
 			"novedades"  => $this->mintervention_characters->_getNovedades(),
 		];
 
@@ -34,5 +35,67 @@ class Intervention_characters extends MX_Controller {
 		$this->load->view('Vintervention_characters',$data);
 		$this->load->view('layouts/admin/Footer',$data);
 	}//
+
+	public function getFullData(){
+		$resp = $this->mintervention_characters->_getFullData(
+			$this->security->xss_clean($_POST['id'])
+		);
+		if($resp){
+			echo $resp;
+			exit;
+		}else{
+			echo "201";
+			exit;
+		}
+	}
+
+	public function newInterventionCharacter(){
+		$data = array(
+			"description"    => $this->security->xss_clean($this->input->post('description'))
+		);
+
+		if($data['description']==""){
+			header('location:'.base_url().'parameters/intervention_characters?msg=emptyDescription');
+			exit;
+		}
+
+		$resp = $this->mintervention_characters->_newInterventionCharacter($data);
+
+		if($resp){
+			header('location:'.base_url().'parameters/intervention_characters?msg=SuccessInsert');
+		}else{
+			header('location:'.base_url().'parameters/intervention_characters?msg=FailedInsert');
+		}
+	}
+
+	public function updateInterventionCharacter(){
+		$data = array(
+			'id'        => $this->security->xss_clean($_POST['id']),
+			'description'    => $this->security->xss_clean($_POST['description'])
+		);
+		$resp = $this->mintervention_characters->_updateInterventionCharacter($data);
+		if($resp){
+			header('location:'.base_url().'parameters/intervention_characters?msg=SuccessUpdate');
+			exit;
+		}else{
+			header('location:'.base_url().'parameters/intervention_characters?msg=FailedUpdate');
+			exit;
+		}
+	}
+
+	public function delInterventionCharacter(){
+		$data = array(
+			$this->security->xss_clean($_POST['id']),
+			$this->security->xss_clean($_POST['clave']),
+		);
+		$resp = $this->mintervention_characters->_delInterventionCharacter($data);
+		if($resp){
+			echo "200";
+			exit;
+		}else{
+			echo "201";
+			exit;
+		}
+	}
 
 }
