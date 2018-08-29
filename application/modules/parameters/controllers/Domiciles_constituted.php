@@ -25,6 +25,7 @@ class Domiciles_constituted extends MX_Controller {
 			"titulo"      => $this->_conf['appname']." - ".$this->lang->line('navmodulo'),
 			"clase"       => "domiciles_constituted",
 			"conf"        => $this->_conf,
+			"lista"  	  => $this->mdomiciles_constituted->_getDomicilesCons(),
 			"novedades"  => $this->mdomiciles_constituted->_getNovedades(),
 		];
 
@@ -35,4 +36,65 @@ class Domiciles_constituted extends MX_Controller {
 		$this->load->view('layouts/admin/Footer',$data);
 	}//
 
+	public function getFullData(){
+		$resp = $this->mdomiciles_constituted->_getFullData(
+			$this->security->xss_clean($_POST['id'])
+		);
+		if($resp){
+			echo $resp;
+			exit;
+		}else{
+			echo "201";
+			exit;
+		}
+	}
+
+	public function newDomicileCons(){
+		$data = array(
+			"description"    => $this->security->xss_clean($this->input->post('description'))
+		);
+
+		if($data['description']==""){
+			header('location:'.base_url().'parameters/domiciles_constituted?msg=emptyDescription');
+			exit;
+		}
+
+		$resp = $this->mdomiciles_constituted->_newDomicileCons($data);
+
+		if($resp){
+			header('location:'.base_url().'parameters/domiciles_constituted?msg=SuccessInsert');
+		}else{
+			header('location:'.base_url().'parameters/domiciles_constituted?msg=FailedInsert');
+		}
+	}
+
+	public function updateDomicileCons(){
+		$data = array(
+			'id'        => $this->security->xss_clean($_POST['id']),
+			'description'    => $this->security->xss_clean($_POST['description'])
+		);
+		$resp = $this->mdomiciles_constituted->_updateDomicileCons($data);
+		if($resp){
+			header('location:'.base_url().'parameters/domiciles_constituted?msg=SuccessUpdate');
+			exit;
+		}else{
+			header('location:'.base_url().'parameters/domiciles_constituted?msg=FailedUpdate');
+			exit;
+		}
+	}
+
+	public function delDomicileCons(){
+		$data = array(
+			$this->security->xss_clean($_POST['id']),
+			$this->security->xss_clean($_POST['clave']),
+		);
+		$resp = $this->mdomiciles_constituted->_delDomicileCons($data);
+		if($resp){
+			echo "200";
+			exit;
+		}else{
+			echo "201";
+			exit;
+		}
+	}
 }

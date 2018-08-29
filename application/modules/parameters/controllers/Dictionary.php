@@ -25,6 +25,7 @@ class Dictionary extends MX_Controller {
 			"titulo"      => $this->_conf['appname']." - ".$this->lang->line('navmodulo'),
 			"clase"       => "dictionary",
 			"conf"        => $this->_conf,
+			"lista"  	  => $this->mdictionary->_getDictionary(),
 			"novedades"  => $this->mdictionary->_getNovedades(),
 		];
 
@@ -34,5 +35,67 @@ class Dictionary extends MX_Controller {
 		$this->load->view('Vdictionary',$data);
 		$this->load->view('layouts/admin/Footer',$data);
 	}//
+
+	public function getFullData(){
+		$resp = $this->mdictionary->_getFullData(
+			$this->security->xss_clean($_POST['id'])
+		);
+		if($resp){
+			echo $resp;
+			exit;
+		}else{
+			echo "201";
+			exit;
+		}
+	}
+
+	public function newWord(){
+		$data = array(
+			"word"    => $this->security->xss_clean($this->input->post('word'))
+		);
+
+		if($data['word']==""){
+			header('location:'.base_url().'parameters/dictionary?msg=emptyWord');
+			exit;
+		}
+
+		$resp = $this->mdictionary->_newWord($data);
+
+		if($resp){
+			header('location:'.base_url().'parameters/dictionary?msg=SuccessInsert');
+		}else{
+			header('location:'.base_url().'parameters/dictionary?msg=FailedInsert');
+		}
+	}
+
+	public function updateWord(){
+		$data = array(
+			'id'        => $this->security->xss_clean($_POST['id']),
+			'word'    => $this->security->xss_clean($_POST['word'])
+		);
+		$resp = $this->mdictionary->_updateWord($data);
+		if($resp){
+			header('location:'.base_url().'parameters/dictionary?msg=SuccessUpdate');
+			exit;
+		}else{
+			header('location:'.base_url().'parameters/dictionary?msg=FailedUpdate');
+			exit;
+		}
+	}
+
+	public function delWord(){
+		$data = array(
+			$this->security->xss_clean($_POST['id']),
+			$this->security->xss_clean($_POST['clave']),
+		);
+		$resp = $this->mdictionary->_delWord($data);
+		if($resp){
+			echo "200";
+			exit;
+		}else{
+			echo "201";
+			exit;
+		}
+	}
 
 }

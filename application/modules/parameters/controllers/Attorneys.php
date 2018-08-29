@@ -107,5 +107,4 @@ class Attorneys extends MX_Controller {
 			exit;
 		}
 	}
-
 }
