@@ -27,8 +27,8 @@ $_conf = parse_ini_file(SYSDIR.'/services/conf.ini');
 |
 */
 //$config['base_url'] = 'http://abogados.oo/';
-//$config['base_url'] = 'https://trueley.com/';
-$config['base_url'] = 'http://35.237.16.130/';
+$config['base_url'] = 'https://trueley.com/';
+//$config['base_url'] = 'http://35.237.16.130/';
 //$config['base_url'] = 'http://localhost/trueley/';
 
 /*
