@@ -223,7 +223,7 @@
             }else{
                 new PNotify({
                     title: 'Atención',
-                    text: 'Ha ocurrido un error inesperado, por favor, refresque la pagina he inetente de nuevo',
+                    text: 'Ha ocurrido un error inesperado, por favor, refresque la pagina he intente de nuevo',
                     icon: 'icon-warning22',
                     type: 'error'
                 });
@@ -232,7 +232,7 @@
         .fail(function(err){
                 new PNotify({
                     title: 'Atención',
-                    text: 'Ha ocurrido un error inesperado, por favor, refresque la pagina he inetente de nuevo',
+                    text: 'Ha ocurrido un error inesperado, por favor, refresque la pagina he intente de nuevo',
                     icon: 'icon-warning22',
                     type: 'error'
                 });

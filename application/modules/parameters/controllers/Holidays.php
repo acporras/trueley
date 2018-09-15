@@ -25,6 +25,7 @@ class Holidays extends MX_Controller {
 			"titulo"      => $this->_conf['appname']." - ".$this->lang->line('navmodulo'),
 			"clase"       => "holidays",
 			"conf"        => $this->_conf,
+			"lista"  	  => $this->mholidays->_getHolidays(),
 			"novedades"  => $this->mholidays->_getNovedades(),
 		];
 
@@ -34,5 +35,73 @@ class Holidays extends MX_Controller {
 		$this->load->view('Vholidays',$data);
 		$this->load->view('layouts/admin/Footer',$data);
 	}//
+	public function getFullData(){
+		$resp = $this->mholidays->_getFullData(
+			$this->security->xss_clean($_POST['id'])
+		);
+		if($resp){
+			echo $resp;
+			exit;
+		}else{
+			echo "201";
+			exit;
+		}
+	}
 
+	public function newHoliday(){
+		$data = array(
+			"type"    => $this->security->xss_clean($this->input->post('type')),
+			"date"    => $this->security->xss_clean($this->input->post('date')),
+			"description"    => $this->security->xss_clean($this->input->post('description'))
+		);
+
+		if($data['date']==""){
+			header('location:'.base_url().'parameters/holidays?msg=emptyDate');
+			exit;
+		}
+
+		if($data['description']==""){
+			header('location:'.base_url().'parameters/holidays?msg=emptyDescription');
+			exit;
+		}
+
+		$resp = $this->mholidays->_newHoliday($data);
+
+		if($resp){
+			header('location:'.base_url().'parameters/holidays?msg=SuccessInsert');
+		}else{
+			header('location:'.base_url().'parameters/holidays?msg=FailedInsert');
+		}
+	}
+
+	public function updateHoliday(){
+		$data = array(
+			'id'        => $this->security->xss_clean($_POST['id']),
+			'date'    => $this->security->xss_clean($_POST['date']),
+			'description'    => $this->security->xss_clean($_POST['description'])
+		);
+		$resp = $this->mholidays->_updateHoliday($data);
+		if($resp){
+			header('location:'.base_url().'parameters/holidays?msg=SuccessUpdate');
+			exit;
+		}else{
+			header('location:'.base_url().'parameters/holidays?msg=FailedUpdate');
+			exit;
+		}
+	}
+
+	public function delHoliday(){
+		$data = array(
+			$this->security->xss_clean($_POST['id']),
+			$this->security->xss_clean($_POST['clave']),
+		);
+		$resp = $this->mholidays->_delHoliday($data);
+		if($resp){
+			echo "200";
+			exit;
+		}else{
+			echo "201";
+			exit;
+		}
+	}
 }
