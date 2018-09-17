@@ -66,14 +66,24 @@ class Mholidays extends CI_model
             }
         }
 
-    }//
+    }
 
+    public function writerlog($texto){
+        $nombre_archivo = "logs.txt"; 
+        $mensaje = $texto;
+     
+        if($archivo = fopen($nombre_archivo, "a"))
+        {
+            fwrite($archivo, date("d m Y H:m:s"). " ". $mensaje. "\n");
+            fclose($archivo);
+        }
+    }
     public function _newHoliday($x){
-        $time = strtotime($x['date']);
-        $datereg = date('Y-m-d', $time);
+        $datereg = str_replace('/', '-', $x['date']);
+        $newdate = date('Y-m-d', strtotime($datereg));
         $data = array(
             "tipo"     => $x['type'],
-            "fecha"     => $datereg,
+            "fecha"     => $newdate,
             "descripcion"     => $x['description'],
             "codcliente" => $this->_session->data->codcliente,
             "estatus"    => "1",
@@ -94,8 +104,10 @@ class Mholidays extends CI_model
     }
 
     public function _updateHoliday($x){
+        $datereg = str_replace('/', '-', $x['date']);
+        $newdate = date('Y-m-d', strtotime($datereg));
         $this->db->trans_begin();
-        $this->db->set('fecha',$x['date']);
+        $this->db->set('fecha',$newdate);
         $this->db->set('descripcion',$x['description']);
         $this->db->set('fechamod',$this->_general->date()->datetime);
         $this->db->where('idFeriado =',$x['id']);

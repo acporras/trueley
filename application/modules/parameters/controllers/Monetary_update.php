@@ -25,6 +25,7 @@ class Monetary_update extends MX_Controller {
 			"titulo"      => $this->_conf['appname']." - ".$this->lang->line('navmodulo'),
 			"clase"       => "monetary_update",
 			"conf"        => $this->_conf,
+			"lista"  	  => $this->mmonetary_update->_getMonetaryUpdate(),
 			"novedades"  => $this->mmonetary_update->_getNovedades(),
 		];
 
@@ -34,5 +35,82 @@ class Monetary_update extends MX_Controller {
 		$this->load->view('Vmonetary_update',$data);
 		$this->load->view('layouts/admin/Footer',$data);
 	}//
+
+	public function getFullData(){
+		$resp = $this->mmonetary_update->_getFullData(
+			$this->security->xss_clean($_POST['id'])
+		);
+		if($resp){
+			echo $resp;
+			exit;
+		}else{
+			echo "201";
+			exit;
+		}
+	}
+
+	public function newMonetaryUpdate(){
+		$data = array(
+			"type"    => $this->security->xss_clean($this->input->post('type')),
+			"date"    => $this->security->xss_clean($this->input->post('date')),
+			"purchase"    => $this->security->xss_clean($this->input->post('purchase')),
+			"sale"    => $this->security->xss_clean($this->input->post('sale'))
+		);
+
+		if($data['date']==""){
+			header('location:'.base_url().'parameters/monetary_update?msg=emptyDate');
+			exit;
+		}
+
+		if($data['purchase']==""){
+			header('location:'.base_url().'parameters/monetary_update?msg=emptyPurchase');
+			exit;
+		}
+
+		if($data['sale']==""){
+			header('location:'.base_url().'parameters/monetary_update?msg=emptySale');
+			exit;
+		}
+
+		$resp = $this->mmonetary_update->_newMonetaryUpdate($data);
+
+		if($resp){
+			header('location:'.base_url().'parameters/monetary_update?msg=SuccessInsert');
+		}else{
+			header('location:'.base_url().'parameters/monetary_update?msg=FailedInsert');
+		}
+	}
+
+	public function updateMonetaryUpdate(){
+		$data = array(
+			'id'        => $this->security->xss_clean($_POST['id']),
+			'date'    => $this->security->xss_clean($_POST['date']),
+			'purchase'    => $this->security->xss_clean($_POST['purchase']),
+			'sale'    => $this->security->xss_clean($_POST['sale'])
+		);
+		$resp = $this->mmonetary_update->_updateMonetaryUpdate($data);
+		if($resp){
+			header('location:'.base_url().'parameters/monetary_update?msg=SuccessUpdate');
+			exit;
+		}else{
+			header('location:'.base_url().'parameters/monetary_update?msg=FailedUpdate');
+			exit;
+		}
+	}
+
+	public function delMonetaryUpdate(){
+		$data = array(
+			$this->security->xss_clean($_POST['id']),
+			$this->security->xss_clean($_POST['clave']),
+		);
+		$resp = $this->mmonetary_update->_delMonetaryUpdate($data);
+		if($resp){
+			echo "200";
+			exit;
+		}else{
+			echo "201";
+			exit;
+		}
+	}
 
 }

@@ -199,7 +199,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class='input-group date' id='dateHolidayNew'>
-                                        <input type='text' name="date" class="form-control" />
+                                        <input type='text' name="date" class="form-control" readonly placeholder="Fecha" />
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -237,7 +237,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class='input-group date' id='dateHolidayEdit'>
-                                        <input type='text' name="date" class="form-control" />
+                                        <input type='text' name="date" class="form-control" readonly placeholder="Fecha" />
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -279,7 +279,9 @@
         .done(function(resp){
             if(resp !="201"){
                 var d = eval("("+resp+")");
-                $('#dateHolidayEdit').datepicker('update', d.fecha);
+                var fecha = d.fecha.split("-");
+                fecha = fecha[2] + "/" + fecha[1] + "/" + fecha[0];
+                $('#dateHolidayEdit').datepicker('update', fecha);
                 $("#txtDescription").val(d.descripcion);
                 $("#txtIdHoliday").val(d.idFeriado);
                 $("#modal-edit").modal('show');
@@ -374,8 +376,8 @@
 
     $(function(){
 
-        $('#dateHolidayNew').datepicker({ format: 'dd/mm/yyyy', });
-        $('#dateHolidayEdit').datepicker({ format: 'dd/mm/yyyy', });
+        $('#dateHolidayNew').datepicker({ format: 'dd/mm/yyyy', autoclose: true });
+        $('#dateHolidayEdit').datepicker({ format: 'dd/mm/yyyy', autoclose: true });
 
         switch (msg) {
             case 'emptyDate':
