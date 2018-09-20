@@ -39,9 +39,9 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Tipos de Tasa de Interés</h3>
+                    <h3 class="panel-title">Tipos de Indice de Interés</h3>
                     <div class="heading-elements">
-                        <a href="#" onClick="" class="uk-icon-button uk-margin-small-right newInteresRate" uk-icon="plus" uk-tooltip="title: Nueva tasa de interés" ></a>
+                        <a href="#" onClick="" class="uk-icon-button uk-margin-small-right newIndicesInterest" uk-icon="plus" uk-tooltip="title: Nuevo índice de interés" ></a>
                     </div>
                 </div>
                 <div class="panel-body">
@@ -50,7 +50,7 @@
                             <thead>
                                 <tr>
                                     <th>Descripción</th>
-                                    <th>Metodo</th>
+                                    <th>Variación</th>
                                     <th>Estado</th>
                                     <th>Fecha Registro</th>
                                     <th>Opciones</th>
@@ -65,7 +65,7 @@
                                 ?>
                                     <tr>
                                         <td><?php echo $item->descripcion ?></td>
-                                        <td><?php echo $item->metodo ?></td>
+                                        <td><?php echo $item->variacion ?></td>
                                         <td><span class="label <?php echo $cl; ?>" ><?php echo $tx; ?></span></td>
                                         <td><?php echo $item->fechareg ?></td>
                                         <td>
@@ -75,13 +75,13 @@
                                             <div uk-dropdown="mode: click; pos:top-left">
                                                 <ul class="uk-nav uk-dropdown-nav">
                                                     <li class="uk-active">
-                                                        <a href="#" data-id="<?php echo $item->idTasaInteres ?>" onclick="editInteresRate(<?php echo $item->idTasaInteres ?>);">
+                                                        <a href="#" data-id="<?php echo $item->idIndiceInteres ?>" onclick="editIndicesInterest(<?php echo $item->idIndiceInteres ?>);">
                                                             <i class="icon-database-edit2 text-primary"></i>
                                                             Editar
                                                         </a>
                                                     </li>
                                                     <li class="uk-active">
-                                                        <a href="#" data-id="<?php echo $item->idTasaInteres ?>" onclick="delInteresRate(<?php echo $item->idTasaInteres ?>);">
+                                                        <a href="#" data-id="<?php echo $item->idIndiceInteres ?>" onclick="delIndicesInterest(<?php echo $item->idIndiceInteres ?>);">
                                                             <i class="icon-database-remove text-danger"></i>
                                                             Eliminar
                                                         </a>
@@ -104,10 +104,10 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Nueva Tasa de Interés</h4>
+                        <h4 class="modal-title">Nuevo Índice de Interés</h4>
                     </div>
                     <div class="modal-body">
-                        <form method="post" action="<?php echo $url ?>parameters/interes_rate/newInteresRate" id="formnew">
+                        <form method="post" action="<?php echo $url ?>parameters/indices_interest/newIndicesInterest" id="formnew">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
@@ -116,12 +116,12 @@
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        <select placeholder="Metodo" class="form-control" name="method">
+                                        <select placeholder="Metodo" class="form-control" name="variation">
                                             <?php 
-                                                if($mae_metodos->cantidad>=1){
-                                                    foreach($mae_metodos->metodos as $met){
+                                                if($mae_variaciones->cantidad>=1){
+                                                    foreach($mae_variaciones->variaciones as $var){
                                             ?>
-                                                <option value="<?php echo $met->campo2 ?>"><?php echo $met->campo1 ?></option>
+                                                <option value="<?php echo $var->campo2 ?>"><?php echo $var->campo1 ?></option>
                                             <?php             
                                                     }
                                                 }
@@ -148,10 +148,10 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Editar Tasa de Interés</h4>
+                        <h4 class="modal-title">Editar índice de Interés</h4>
                     </div>
                     <div class="modal-body">
-                        <form method="post" action="<?php echo $url ?>parameters/interes_rate/updateinteresrate" id="formedit">
+                        <form method="post" action="<?php echo $url ?>parameters/indices_interest/updateIndicesInterest" id="formedit">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
@@ -160,21 +160,21 @@
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        <select id="cboMethod" placeholder="Metodo" class="form-control" name="method">
-                                            <?php 
-                                                if($mae_metodos->cantidad>=1){
-                                                    foreach($mae_metodos->metodos as $met){
-                                            ?>
-                                                <option value="<?php echo $met->campo2 ?>"><?php echo $met->campo1 ?></option>
-                                            <?php             
+                                        <select id="cboVariation" placeholder="Variación" class="form-control" name="variation">
+                                                <?php 
+                                                    if($mae_variaciones->cantidad>=1){
+                                                        foreach($mae_variaciones->variaciones as $var){
+                                                ?>
+                                                    <option value="<?php echo $var->campo2 ?>"><?php echo $var->campo1 ?></option>
+                                                <?php             
+                                                        }
                                                     }
-                                                }
-                                            ?>
+                                                ?>
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" name="id" id="txtIdInteresRate"/>
+                            <input type="hidden" name="id" id="txtIdIndicesInterest"/>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -195,18 +195,18 @@
 <script type="text/javascript">
     var msg = '<?php echo isset($_GET['msg']) ? $_GET['msg'] : '' ?>';
 
-    function editInteresRate(dataid){
+    function editIndicesInterest(dataid){
         var id = dataid;
 
-        $.post('<?php echo $url ?>parameters/interes_rate/getfulldata',{
+        $.post('<?php echo $url ?>parameters/indices_interest/getfulldata',{
             id:id
         })
         .done(function(resp){
             if(resp !="201"){
                 var d = eval("("+resp+")");
                 $("#taDescription").val(d.descripcion);
-                $("#cboMethod").val(d.codmetodo);
-                $("#txtIdInteresRate").val(d.idTasaInteres);
+                $("#cboVariation").val(d.codvariacion);
+                $("#txtIdIndicesInterest").val(d.idIndiceInteres);
                 $("#modal-edit").modal('show');
                 
 
@@ -229,9 +229,9 @@
         })
     }
 
-    function delInteresRate(dataid){
+    function delIndicesInterest(dataid){
         var id = dataid;
-        UIkit.modal.confirm('¿Esta seguro de eliminar la tasa de interes?').then(function () {
+        UIkit.modal.confirm('¿Esta seguro de eliminar el índice de interes?').then(function () {
             UIkit.modal.prompt('Ingrese su clave de acceso para confirmar la eliminación', '').then(function (clave) {
 
                 if(clave==""){
@@ -261,7 +261,7 @@
                         backgroundColor: '#9E0000'
                     }
                 });
-                $.post('<?php echo $url ?>parameters/interes_rate/delInteresRate',{
+                $.post('<?php echo $url ?>parameters/indices_interest/delIndicesInterest',{
                     id:id,
                     clave:clave
                 })
@@ -270,7 +270,7 @@
                     $("body").unblock();
                     if($.trim(resp)=="200"){
                         UIkit.modal.alert('Se ha eliminado el abogado correctamente, se procederá a refrescar las listas').then(function () {
-                            window.location.href="<?php echo $url ?>parameters/interes_rate";
+                            window.location.href="<?php echo $url ?>parameters/indices_interest";
                         });
 
                     }else{
@@ -318,7 +318,7 @@
             case 'SuccessInsert':
                 var msga = $("#modal-alert2").iziModal({
                     title: "Exito!",
-                    subtitle: 'Se ha registrado la tasa de interés',
+                    subtitle: 'Se ha registrado el índice de interés',
                     headerColor: '#4f7c34',
                     width: 600,
                     timeout: 7000,
@@ -334,7 +334,7 @@
             case 'FailedInsert':
                 var msga = $("#modal-alert2").iziModal({
                     title: "Error!",
-                    subtitle: 'No se pudo insertar la tasa de interés',
+                    subtitle: 'No se pudo insertar el índice de interés',
                     headerColor: '#BD5B5B',
                     width: 600,
                     timeout: 7000,
@@ -350,7 +350,7 @@
             case 'SuccessUpdate':
                 var msga = $("#modal-alert2").iziModal({
                     title: "Exito!",
-                    subtitle: 'Se ha actualizado correctamente la tasa de interés',
+                    subtitle: 'Se ha actualizado correctamente el índice de interés',
                     headerColor: '#4f7c34',
                     width: 600,
                     timeout: 7000,
@@ -366,7 +366,7 @@
             case 'FailedUpdate':
                 var msga = $("#modal-alert2").iziModal({
                     title: "Error!",
-                    subtitle: 'No se pudo actualizar la tasa de interés',
+                    subtitle: 'No se pudo actualizar el índice de interés',
                     headerColor: '#BD5B5B',
                     width: 600,
                     timeout: 7000,
@@ -380,7 +380,7 @@
             break;
         }
 
-        $(".newInteresRate").click(function(e){
+        $(".newIndicesInterest").click(function(e){
             e.preventDefault();
             $("#modal-new").modal('show');
         });
