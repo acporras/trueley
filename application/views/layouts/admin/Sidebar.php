@@ -153,10 +153,30 @@
 									</a>
 								</li>
 								<li class="<?php echo ($clase=="monetary_update") ? 'active' : ''; ?>">
-									<a href="<?php echo $url ?>parameters/monetary_update">	
+									<a href="#">	
 										<i class="icon-coin-pound"></i>
 										<span>Tablas de actualización Monetaria</span>
 									</a>
+									<ul class="navigation navigation-main navigation-accordion">
+										<li class="<?php echo ($clase=="interes_rate") ? 'active' : ''; ?>">
+											<a href="<?php echo $url ?>parameters/interes_rate">
+												<i class="icon-users4"></i>
+												<span>Tasas de interes</span>
+											</a>
+										</li>
+										<li class="<?php echo ($clase=="indices_interest") ? 'active' : ''; ?>">
+											<a href="<?php echo $url ?>parameters/indices_interest">
+												<i class="icon-users2"></i>
+												<span>índices de interes</span>
+											</a>
+										</li>
+										<li class="<?php echo ($clase=="quote_coins") ? 'active' : ''; ?>">
+											<a href="<?php echo $url ?>parameters/quote_coins">
+												<i class="icon-users2"></i>
+												<span>Cotización de monedas</span>
+											</a>
+										</li>
+									</ul>
 								</li>
 								<li class="<?php echo ($clase=="holidays") ? 'active' : ''; ?>">
 									<a href="<?php echo $url ?>parameters/holidays">

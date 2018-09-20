@@ -1,7 +1,7 @@
 <?php
 use xfxstudios\general\GeneralClass;
 use xfxstudios\general\Valid;
-class Mmonetary_update extends CI_model
+class Mquote_coins extends CI_model
 {
 	public function __construct(){
         $this->_general = new GeneralClass();
@@ -26,9 +26,9 @@ class Mmonetary_update extends CI_model
         return  ($q->num_rows()>=1) ? $q->result() : false;
     }//
 
-    public function _getMonetaryUpdate(){
+    public function _getQuoteCoins(){
         $cod =$this->_session->data->codcliente;
-        $q = $this->db->query("SELECT * FROM actualizacion_monetaria WHERE codcliente = '$cod' ORDER BY
+        $q = $this->db->query("SELECT * FROM cotizacion_moneda WHERE codcliente = '$cod' ORDER BY
             fechareg DESC");
 
         $r = (object) array(
@@ -79,7 +79,7 @@ class Mmonetary_update extends CI_model
         }
     }
 
-    public function _newMonetaryUpdate($x){
+    public function _newQuoteCoin($x){
         $datereg = str_replace('/', '-', $x['date']);
         $newdate = date('Y-m-d', strtotime($datereg));
         $data = array(
@@ -94,7 +94,7 @@ class Mmonetary_update extends CI_model
 
         $this->db->trans_begin();
 
-        $this->db->insert('actualizacion_monetaria',$data);
+        $this->db->insert('cotizacion_moneda',$data);
 
         if($this->db->trans_complete()===TRUE){
             $this->db->trans_commit();
@@ -105,7 +105,7 @@ class Mmonetary_update extends CI_model
         }
     }
 
-    public function _updateMonetaryUpdate($x){
+    public function _updateQuoteCoin($x){
         $datereg = str_replace('/', '-', $x['date']);
         $newdate = date('Y-m-d', strtotime($datereg));
         $this->db->trans_begin();
@@ -113,9 +113,9 @@ class Mmonetary_update extends CI_model
         $this->db->set('compra',$x['purchase']);
         $this->db->set('venta',$x['sale']);
         $this->db->set('fechamod',$this->_general->date()->datetime);
-        $this->db->where('idActualizacionMonetaria =',$x['id']);
+        $this->db->where('idCotizacionMoneda =',$x['id']);
         $this->db->where('codcliente =',$this->_session->data->codcliente);
-        $this->db->update('actualizacion_monetaria');
+        $this->db->update('cotizacion_moneda');
 
         if($this->db->trans_complete()===TRUE){
             $this->db->trans_commit();
@@ -128,7 +128,7 @@ class Mmonetary_update extends CI_model
         }
     }
 
-    public function _delMonetaryUpdate($x){
+    public function _delQuoteCoin($x){
         $u = $this->_session->data->usuario;
         $a = $this->db->query("SELECT * FROM usuarios WHERE usuario =  '$u'");
 
@@ -136,8 +136,8 @@ class Mmonetary_update extends CI_model
             $data = $this->_getUsuarios($x[1]);
 
             $this->db->trans_begin();
-            $this->db->where('idActualizacionMonetaria = ',$x[0]);
-            $this->db->delete('actualizacion_monetaria');
+            $this->db->where('idCotizacionMoneda = ',$x[0]);
+            $this->db->delete('cotizacion_moneda');
 
             if($this->db->trans_complete()===TRUE){
                 $this->db->trans_commit();
@@ -153,7 +153,7 @@ class Mmonetary_update extends CI_model
     }
 
     public function _getFullData($x){
-        $q = $this->db->query("SELECT * FROM actualizacion_monetaria WHERE idActualizacionMonetaria = '$x'");
+        $q = $this->db->query("SELECT * FROM cotizacion_moneda WHERE idCotizacionMoneda = '$x'");
 
         if($q->num_rows()==1){
             return json_encode($q->row());

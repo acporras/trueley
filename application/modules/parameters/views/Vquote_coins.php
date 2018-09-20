@@ -2,7 +2,7 @@
 <div class="page-header page-header-default">
     <div class="page-header-content">
         <div class="page-title">
-        <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold"><?php echo $this->lang->line('navinicio'); ?></span> - <?php echo $this->lang->line('navmodulo'); ?> - <?php echo $this->lang->line('navsubmo1'); ?></h4>
+        <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold"><?php echo $this->lang->line('navinicio'); ?></span> - <?php echo $this->lang->line('navmodulo'); ?> - <?php echo $this->lang->line('navsubmo1'); ?> - <?php echo $this->lang->line('navsubmo2'); ?></h4>
         </div>
 
         <div class="heading-elements">
@@ -58,7 +58,7 @@
                                     <div class="panel-heading">
                                         <h3 class="panel-title">Cotización: DÓLARES nom. en PESOS</h3>
                                         <div class="heading-elements">
-                                            <a href="#" onClick="" class="uk-icon-button uk-margin-small-right newMonetaryUpdatedp" uk-icon="plus" uk-tooltip="title: Nueva Cotización" ></a>
+                                            <a href="#" onClick="" class="uk-icon-button uk-margin-small-right newQuoteCoindp" uk-icon="plus" uk-tooltip="title: Nueva Cotización" ></a>
                                         </div>
                                     </div>
                                     <div class="panel-body">
@@ -95,13 +95,13 @@
                                                                 <div uk-dropdown="mode: click; pos:top-left">
                                                                     <ul class="uk-nav uk-dropdown-nav">
                                                                         <li class="uk-active">
-                                                                            <a href="#" data-id="<?php echo $item->idActualizacionMonetaria ?>" onclick="editMonetaryUpdate(<?php echo $item->idActualizacionMonetaria ?>);">
+                                                                            <a href="#" data-id="<?php echo $item->idCotizacionMoneda ?>" onclick="editQuoteCoin(<?php echo $item->idCotizacionMoneda ?>);">
                                                                                 <i class="icon-database-edit2 text-primary"></i>
                                                                                 Editar
                                                                             </a>
                                                                         </li>
                                                                         <li class="uk-active">
-                                                                            <a href="#" data-id="<?php echo $item->idActualizacionMonetaria ?>" onclick="delMonetaryUpdate(<?php echo $item->idActualizacionMonetaria ?>);">
+                                                                            <a href="#" data-id="<?php echo $item->idCotizacionMoneda ?>" onclick="delQuoteCoin(<?php echo $item->idCotizacionMoneda ?>);">
                                                                                 <i class="icon-database-remove text-danger"></i>
                                                                                 Eliminar
                                                                             </a>
@@ -126,7 +126,7 @@
                                     <div class="panel-heading">
                                         <h3 class="panel-title">Cotización: EUROS nom. en PESOS</h3>
                                         <div class="heading-elements">
-                                            <a href="#" onClick="" class="uk-icon-button uk-margin-small-right newMonetaryUpdateep" uk-icon="plus" uk-tooltip="title: Nueva Cotización" ></a>
+                                            <a href="#" onClick="" class="uk-icon-button uk-margin-small-right newQuoteCoinep" uk-icon="plus" uk-tooltip="title: Nueva Cotización" ></a>
                                         </div>
                                     </div>
                                     <div class="panel-body">
@@ -163,13 +163,13 @@
                                                                 <div uk-dropdown="mode: click; pos:top-left">
                                                                     <ul class="uk-nav uk-dropdown-nav">
                                                                         <li class="uk-active">
-                                                                            <a href="#" data-id="<?php echo $item->idActualizacionMonetaria ?>" onclick="editMonetaryUpdate(<?php echo $item->idActualizacionMonetaria ?>);">
+                                                                            <a href="#" data-id="<?php echo $item->idCotizacionMoneda ?>" onclick="editQuoteCoin(<?php echo $item->idCotizacionMoneda ?>);">
                                                                                 <i class="icon-database-edit2 text-primary"></i>
                                                                                 Editar
                                                                             </a>
                                                                         </li>
                                                                         <li class="uk-active">
-                                                                            <a href="#" data-id="<?php echo $item->idActualizacionMonetaria ?>" onclick="delMonetaryUpdate(<?php echo $item->idActualizacionMonetaria ?>);">
+                                                                            <a href="#" data-id="<?php echo $item->idCotizacionMoneda ?>" onclick="delQuoteCoin(<?php echo $item->idCotizacionMoneda ?>);">
                                                                                 <i class="icon-database-remove text-danger"></i>
                                                                                 Eliminar
                                                                             </a>
@@ -194,7 +194,7 @@
                                     <div class="panel-heading">
                                         <h3 class="panel-title">Cotización: DÓLARES nom. en EUROS</h3>
                                         <div class="heading-elements">
-                                            <a href="#" onClick="" class="uk-icon-button uk-margin-small-right newMonetaryUpdatede" uk-icon="plus" uk-tooltip="title: Nueva Cotización" ></a>
+                                            <a href="#" onClick="" class="uk-icon-button uk-margin-small-right newQuoteCoinde" uk-icon="plus" uk-tooltip="title: Nueva Cotización" ></a>
                                         </div>
                                     </div>
                                     <div class="panel-body">
@@ -231,13 +231,13 @@
                                                                 <div uk-dropdown="mode: click; pos:top-left">
                                                                     <ul class="uk-nav uk-dropdown-nav">
                                                                         <li class="uk-active">
-                                                                            <a href="#" data-id="<?php echo $item->idActualizacionMonetaria ?>" onclick="editMonetaryUpdate(<?php echo $item->idActualizacionMonetaria ?>);">
+                                                                            <a href="#" data-id="<?php echo $item->idCotizacionMoneda ?>" onclick="editQuoteCoin(<?php echo $item->idCotizacionMoneda ?>);">
                                                                                 <i class="icon-database-edit2 text-primary"></i>
                                                                                 Editar
                                                                             </a>
                                                                         </li>
                                                                         <li class="uk-active">
-                                                                            <a href="#" data-id="<?php echo $item->idActualizacionMonetaria ?>" onclick="delMonetaryUpdate(<?php echo $item->idActualizacionMonetaria ?>);">
+                                                                            <a href="#" data-id="<?php echo $item->idCotizacionMoneda ?>" onclick="delQuoteCoin(<?php echo $item->idCotizacionMoneda ?>);">
                                                                                 <i class="icon-database-remove text-danger"></i>
                                                                                 Eliminar
                                                                             </a>
@@ -270,10 +270,10 @@
                         <h4 class="modal-title">Nueva Cotización</h4>
                     </div>
                     <div class="modal-body">
-                        <form method="post" action="<?php echo $url ?>parameters/monetary_update/newMonetaryUpdate" id="formnew">
+                        <form method="post" action="<?php echo $url ?>parameters/quote_coins/newQuoteCoin" id="formnew">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class='input-group date' id='dateMonetaryUpdateNew'>
+                                    <div class='input-group date' id='dateQuoteCoinNew'>
                                         <input type='text' name="date" class="form-control" readonly placeholder="Fecha" />
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
@@ -290,7 +290,7 @@
                                         <input min="0" placeholder="Vendedor" class="form-control" type="number" step="0.1" name="sale">
                                     </div>
                                 </div>
-                                <input type="hidden" name="type" id="type-monetary-update">
+                                <input type="hidden" name="type" id="type-quote-coins">
                             </div>
                         </form>
                     </div>
@@ -313,10 +313,10 @@
                         <h4 class="modal-title">Editar Cotización</h4>
                     </div>
                     <div class="modal-body">
-                        <form method="post" action="<?php echo $url ?>parameters/monetary_update/updateMonetaryUpdate" id="formedit">
+                        <form method="post" action="<?php echo $url ?>parameters/quote_coins/updateQuoteCoin" id="formedit">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class='input-group date' id='dateMonetaryUpdateEdit'>
+                                    <div class='input-group date' id='dateQuoteCoinEdit'>
                                         <input type='text' name="date" class="form-control" readonly placeholder="Fecha" />
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
@@ -334,7 +334,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" name="id" id="txtIdMonetaryUpdate"/>
+                            <input type="hidden" name="id" id="txtIdQuoteCoin"/>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -354,10 +354,10 @@
 <script type="text/javascript">
     var msg = '<?php echo isset($_GET['msg']) ? $_GET['msg'] : '' ?>';
 
-    function editMonetaryUpdate(dataid){
+    function editQuoteCoin(dataid){
         var id = dataid;
 
-        $.post('<?php echo $url ?>parameters/monetary_update/getfulldata',{
+        $.post('<?php echo $url ?>parameters/quote_coins/getfulldata',{
             id:id
         })
         .done(function(resp){
@@ -365,10 +365,10 @@
                 var d = eval("("+resp+")");
                 var fecha = d.fecha.split("-");
                 fecha = fecha[2] + "/" + fecha[1] + "/" + fecha[0];
-                $('#dateMonetaryUpdateEdit').datepicker('update', fecha);
+                $('#dateQuoteCoinEdit').datepicker('update', fecha);
                 $("#txtPurchase").val(d.compra);
                 $("#txtSale").val(d.venta);
-                $("#txtIdMonetaryUpdate").val(d.idActualizacionMonetaria);
+                $("#txtIdQuoteCoin").val(d.idCotizacionMoneda);
                 $("#modal-edit").modal('show');
                 
 
@@ -391,7 +391,7 @@
         })
     }
 
-    function delMonetaryUpdate(dataid){
+    function delQuoteCoin(dataid){
         var id = dataid;
         UIkit.modal.confirm('¿Esta seguro de eliminar la cotización?').then(function () {
             UIkit.modal.prompt('Ingrese su clave de acceso para confirmar la eliminación', '').then(function (clave) {
@@ -423,7 +423,7 @@
                         backgroundColor: '#9E0000'
                     }
                 });
-                $.post('<?php echo $url ?>parameters/monetary_update/delmonetaryupdate',{
+                $.post('<?php echo $url ?>parameters/quote_coins/delquotecoin',{
                     id:id,
                     clave:clave
                 })
@@ -432,7 +432,7 @@
                     $("body").unblock();
                     if($.trim(resp)=="200"){
                         UIkit.modal.alert('Se ha eliminado la cotización correctamente, se procederá a refrescar las listas').then(function () {
-                            window.location.href="<?php echo $url ?>parameters/monetary_update";
+                            window.location.href="<?php echo $url ?>parameters/quote_coins";
                         });
 
                     }else{
@@ -461,8 +461,8 @@
 
     $(function(){
 
-        $('#dateMonetaryUpdateNew').datepicker({ format: 'dd/mm/yyyy', autoclose: true });
-        $('#dateMonetaryUpdateEdit').datepicker({ format: 'dd/mm/yyyy', autoclose: true });
+        $('#dateQuoteCoinNew').datepicker({ format: 'dd/mm/yyyy', autoclose: true });
+        $('#dateQuoteCoinEdit').datepicker({ format: 'dd/mm/yyyy', autoclose: true });
 
         switch (msg) {
             case 'emptyDate':
@@ -578,21 +578,21 @@
             break;
         }
 
-        $(".newMonetaryUpdatedp").click(function(e){
+        $(".newQuoteCoindp").click(function(e){
             e.preventDefault();
-            $("#type-monetary-update").val('dp');
+            $("#type-quote-coins").val('dp');
             $("#modal-new").modal('show');
         });
 
-        $(".newMonetaryUpdateep").click(function(e){
+        $(".newQuoteCoinep").click(function(e){
             e.preventDefault();
-            $("#type-monetary-update").val('ep');
+            $("#type-quote-coins").val('ep');
             $("#modal-new").modal('show');
         });
 
-        $(".newMonetaryUpdatede").click(function(e){
+        $(".newQuoteCoinde").click(function(e){
             e.preventDefault();
-            $("#type-monetary-update").val('de');
+            $("#type-quote-coins").val('de');
             $("#modal-new").modal('show');
         });
 
