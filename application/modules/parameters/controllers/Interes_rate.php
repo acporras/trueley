@@ -50,6 +50,19 @@ class Interes_rate extends MX_Controller {
 		}
 	}
 
+	public function getRatesbyType(){
+		$resp = $this->minteres_rate->_getRatesbyType(
+			$this->security->xss_clean($_POST['id'])
+		);
+		if($resp){
+			echo $resp;
+			exit;
+		}else{
+			echo "201";
+			exit;
+		}
+	}
+
 	public function newInteresRate(){
 		$data = array(
 			"description"    => $this->security->xss_clean($this->input->post('description')),
@@ -67,6 +80,32 @@ class Interes_rate extends MX_Controller {
 			header('location:'.base_url().'parameters/interes_rate?msg=SuccessInsert');
 		}else{
 			header('location:'.base_url().'parameters/interes_rate?msg=FailedInsert');
+		}
+	}
+
+	public function newRate(){
+		$data = array(
+			"date"    => $this->security->xss_clean($this->input->post('date')),
+			"value"    => $this->security->xss_clean($this->input->post('value')),
+			"idInteresRate"    => $this->security->xss_clean($this->input->post('idInteresRate'))
+		);
+
+		if($data['date']==""){
+			header('location:'.base_url().'parameters/interes_rate?msg=emptyDateRate');
+			exit;
+		}
+
+		if($data['value']==""){
+			header('location:'.base_url().'parameters/interes_rate?msg=emptyValueRate');
+			exit;
+		}
+
+		$resp = $this->minteres_rate->_newRate($data);
+
+		if($resp){
+			header('location:'.base_url().'parameters/interes_rate?msg=SuccessInsertRate');
+		}else{
+			header('location:'.base_url().'parameters/interes_rate?msg=FailedInsertRate');
 		}
 	}
 
@@ -92,6 +131,21 @@ class Interes_rate extends MX_Controller {
 			$this->security->xss_clean($_POST['clave']),
 		);
 		$resp = $this->minteres_rate->_delInteresRate($data);
+		if($resp){
+			echo "200";
+			exit;
+		}else{
+			echo "201";
+			exit;
+		}
+	}
+
+	public function delRate(){
+		$data = array(
+			$this->security->xss_clean($_POST['id']),
+			$this->security->xss_clean($_POST['clave']),
+		);
+		$resp = $this->minteres_rate->_delRate($data);
 		if($resp){
 			echo "200";
 			exit;

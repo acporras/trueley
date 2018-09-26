@@ -116,6 +116,31 @@ class Minteres_rate extends CI_model
         }
     }
 
+    public function _newRate($x){
+        $datereg = str_replace('/', '-', $x['date']);
+        $newdate = date('Y-m-d', strtotime($datereg));
+        $data = array(
+            "idTasaInteres"     => $x['idInteresRate'],
+            "fecha"     => $newdate,
+            "valor"     => $x['value'],
+            "codcliente" => $this->_session->data->codcliente,
+            "estatus"    => "1",
+            "fechareg"   => $this->_general->date()->datetime
+        );
+
+        $this->db->trans_begin();
+
+        $this->db->insert('tasa',$data);
+
+        if($this->db->trans_complete()===TRUE){
+            $this->db->trans_commit();
+            return true;
+        }else{
+            $this->db->trans_rollback();
+            return false;
+        }
+    }
+
     public function _updateInteresRate($x){
         $this->db->trans_begin();
         $this->db->set('descripcion',$x['description']);
@@ -160,6 +185,30 @@ class Minteres_rate extends CI_model
         }
     }
 
+    public function _delRate($x){
+        $u = $this->_session->data->usuario;
+        $a = $this->db->query("SELECT * FROM usuarios WHERE usuario =  '$u'");
+
+        if(password_verify($x[1], $a->row()->pass)){
+            $data = $this->_getUsuarios($x[1]);
+
+            $this->db->trans_begin();
+            $this->db->where('idTasa = ',$x[0]);
+            $this->db->delete('tasa');
+
+            if($this->db->trans_complete()===TRUE){
+                $this->db->trans_commit();
+                return true;
+            }else{
+                $this->db->trans_rollback();
+                return false;
+            }
+
+        }else{
+            return false;
+        }
+    }
+
     public function _getFullData($x){
         $q = $this->db->query("SELECT * FROM tasa_interes WHERE idTasaInteres = '$x'");
 
@@ -167,6 +216,14 @@ class Minteres_rate extends CI_model
             return json_encode($q->row());
         }else{
         }
+    }
 
+    public function _getRatesbyType($x){
+        $q = $this->db->query("SELECT * FROM tasa WHERE idTasaInteres = '$x'");
+
+        $r = (object) array(
+            'data'    => $q->result()
+        );
+        return json_encode($r);
     }
 }
