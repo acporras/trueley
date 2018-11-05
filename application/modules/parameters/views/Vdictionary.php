@@ -39,7 +39,10 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Lista de Palabras</h3>
+                    <h3 class="panel-title">
+                        <span style="margin-right: 100px;">Lista de Palabras</span>
+                        <a href="http://cmas.siu.buap.mx/portal_pprd/work/sites/fdcs/resources/PDFContent/419/Diccionario%20Jur%C3%ADdico.pdf" class="btn btn-danger" target="_blank">Diccionario</a>
+                    </h3>
                     <div class="heading-elements">
                         <a href="#" onClick="" class="uk-icon-button uk-margin-small-right newWord" uk-icon="plus" uk-tooltip="title: Nueva Palabra" ></a>
                     </div>
