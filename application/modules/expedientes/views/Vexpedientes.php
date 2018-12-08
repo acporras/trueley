@@ -483,13 +483,14 @@
                     UIkit.modal.alert('Se ha realizado la actualización correctamente, se procederá a refrescar las listas').then(function () {
                         window.location.href="<?php echo $url ?>expedientes";
                     });
-
+                    console.log(resp);
                 }else{
                     new PNotify({
                         title: 'Atención',
                         text: 'No se han encontrado registro de Despacho o ya esta a despacho',
                         icon: 'icon-warning22'
                     });
+                    console.log(resp);
                 }
 
             })

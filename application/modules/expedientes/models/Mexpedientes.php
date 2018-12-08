@@ -236,7 +236,7 @@ class Mexpedientes extends CI_model
                     $valid = $this->juzgados->_getCaseFile(array('expediente'=>$item->expediente,'juzgado'=>$item->dependencia));
                 }
 
-
+                
                 if($valid && $item->estado == "pendiente despacho"){
                     $this->db->set('portada',$valid->caratula);
                     $this->db->set('juzgado',$valid->dependencia);
