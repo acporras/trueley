@@ -157,7 +157,7 @@ class Juzgados
 				]
 			]);
 
-			$control = fopen(__DIR__."/consultas/consulta".$this->_session->data->usuario.".html","w+");
+			$control = fopen(__DIR__."/consultas/consulta/".$this->_session->data->usuario.".html","w+");
 			fwrite($control, $response->getBody()->getContents());
 			fclose($control);
 
@@ -174,7 +174,7 @@ class Juzgados
 
     private function _getFileData(){
 		$dom = new domDocument; 
-		$f = __DIR__."/consultas/consulta".$this->_session->data->usuario.".html";
+		$f = __DIR__."/consultas/consulta/".$this->_session->data->usuario.".html";
 		$file = file_get_contents($f);
 
 			$dom->loadHTML($file);
